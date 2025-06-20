@@ -3,14 +3,37 @@
 // Import required modules
 const express = require('express');
 const bodyParser = require('body-parser');
-const { v4: uuidv4 } = require('uuid');
+const mongoose = require('mongoose');
+const productRoutes = require('./routes/products');
+const logger = require('./middleware/logger');
+const auth = require('./middleware/auth');
+const errorHandler = require('./middleware/errorHandler');// apply globally
+// OR: router.use(auth); // apply only to routes/products.js
+
+
 
 // Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
+const mongoUri = 'mongodb://localhost:27017/products'; // Example MongoDB URI
+const PORT =  3000;
+
+//MongoDB connection
+mongoose.connect(mongoUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => console.log('MongoDB connected successfully'))
+.catch(err => console.error('MongoDB connection error:', err));
+
 
 // Middleware setup
 app.use(bodyParser.json());
+app.use(logger);
+app.use(auth);
+
+//Routes
+app.use('/api/products', productRoutes);
+
+
 
 // Sample in-memory products database
 let products = [
@@ -42,8 +65,11 @@ let products = [
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('Welcome to the Product API! Go to /api/products to see all products.');
+  res.send('Hello World from the Product API! Go to /api/products to see all products.');
 });
+
+// Define routes for products
+// Note: The following routes are placeholders and need to be implemented as per the assignment requirements.
 
 // TODO: Implement the following routes:
 // GET /api/products - Get all products
@@ -52,15 +78,17 @@ app.get('/', (req, res) => {
 // PUT /api/products/:id - Update a product
 // DELETE /api/products/:id - Delete a product
 
-// Example route implementation for GET /api/products
-app.get('/api/products', (req, res) => {
-  res.json(products);
-});
+//Error handler 
+app.use(errorHandler);
+
+
 
 // TODO: Implement custom middleware for:
 // - Request logging
 // - Authentication
 // - Error handling
+
+
 
 // Start the server
 app.listen(PORT, () => {
