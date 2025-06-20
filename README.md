@@ -1,63 +1,128 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19809098&assignment_repo_type=AssignmentRepo)
-# Express.js RESTful API Assignment
+# 🛍️ Product Management API
 
-This assignment focuses on building a RESTful API using Express.js, implementing proper routing, middleware, and error handling.
+A RESTful API built with **Express.js** and **MongoDB** for managing products. This project is part of the **Week 2 Express.js Assignment** for the PLP Program.
 
-## Assignment Overview
+## 🚀 Features
 
-You will:
-1. Set up an Express.js server
-2. Create RESTful API routes for a product resource
-3. Implement custom middleware for logging, authentication, and validation
-4. Add comprehensive error handling
-5. Develop advanced features like filtering, pagination, and search
+- CRUD operations for products
+- Middleware for logging, validation, and authentication
+- MongoDB integration using Mongoose
+- Pagination, filtering, and search
+- Product statistics by category
+- Error handling and custom error classes
 
-## Getting Started
+## 🧾 Tech Stack
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Install dependencies:
-   ```
-   npm install
-   ```
-4. Run the server:
-   ```
-   npm start
-   ```
+- Node.js
+- Express.js
+- MongoDB & Mongoose
+- Postman (for API testing)
 
-## Files Included
+---
 
-- `Week2-Assignment.md`: Detailed assignment instructions
-- `server.js`: Starter Express.js server file
-- `.env.example`: Example environment variables file
+## 📦 Installation & Setup
 
-## Requirements
+1. **Clone the repository:**
 
-- Node.js (v18 or higher)
-- npm or yarn
-- Postman, Insomnia, or curl for API testing
+```bash
+git clone https://github.com/PLP-MERN-Stack-Development/week-2-express-js-assignment-Stephen-179.git
+cd product-api
+Install dependencies:
 
-## API Endpoints
+bash
+Copy code
+pnpm install
+Start MongoDB (locally or using a MongoDB Atlas URI).
 
-The API will have the following endpoints:
+Run the server:
 
-- `GET /api/products`: Get all products
-- `GET /api/products/:id`: Get a specific product
-- `POST /api/products`: Create a new product
-- `PUT /api/products/:id`: Update a product
-- `DELETE /api/products/:id`: Delete a product
+bash
+Copy code
+pnpm run dev
+Server will start on: http://localhost:3000
 
-## Submission
+🔐 Authentication
+All requests must include a valid API key in the headers:
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+vbnet
+Copy code
+x-api-key: my-secret-key
+You can change the key in middleware/auth.js or via .env.
 
-1. Complete all the required API endpoints
-2. Implement the middleware and error handling
-3. Document your API in the README.md
-4. Include examples of requests and responses
+📘 API Endpoints
+📍 Base URL
+bash
+Copy code
+/api/products
+➕ POST /
+Create a new product
 
-## Resources
+📥 GET /
+Get all products with optional query parameters:
 
-- [Express.js Documentation](https://expressjs.com/)
-- [RESTful API Design Best Practices](https://restfulapi.net/)
-- [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) 
+category: filter by category
+
+inStock: true or false
+
+page: page number (default: 1)
+
+limit: items per page (default: 5)
+
+🔍 GET /search?name=keyword
+Search products by name (case-insensitive)
+
+📊 GET /stats
+Get stats grouped by category:
+
+total count
+
+average price
+
+number in stock
+
+🆔 GET /:id
+Get a product by ID
+
+✏️ PUT /:id
+Update a product by ID
+
+❌ DELETE /:id
+Delete a product by ID
+
+📁 Folder Structure
+pgsql
+Copy code
+.
+├── middleware/
+│   ├── auth.js
+│   ├── logger.js
+│   ├── validateProduct.js
+│   └── errorHandler.js
+├── routes/
+│   └── products.js
+├── utils/
+│   └── errors.js
+├── Products.js
+├── server.js
+├── package.json
+└── README.md
+📬 Example Request
+http
+Copy code
+POST /api/products
+x-api-key: my-secret-key
+Content-Type: application/json
+
+{
+  "name": "Wireless Mouse",
+  "description": "Ergonomic design",
+  "price": 25,
+  "category": "accessories",
+  "inStock": true
+}
+
+
+🧑‍💻 Author
+Stephen Mwatsaka
+MERN Stack Developer | PLP Participant
+
